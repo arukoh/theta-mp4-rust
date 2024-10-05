@@ -29,13 +29,18 @@ fn main() {
 
     match parse(&cli.filename, target_boxes.as_deref()) {
         Some((_mp4, theta_meta)) => {
-            if let Some(rthu_box) = &theta_meta.rthu {
+            if theta_meta.is_none() {
+                writeln!(io::stderr(), "Metadata not found").unwrap();
+                std::process::exit(0);
+            }
+            let meta = theta_meta.as_ref().unwrap();
+            if let Some(rthu_box) = &meta.rthu {
                 let _ = rthu_box.write_to_file(&cli.filename);
                 if let Err(e) = rthu_box.write_to_file(&cli.filename) {
                     eprintln!("Failed to write the RTHU: {}", e);
                 }
             }
-            let json_result = serde_json::to_string_pretty(&theta_meta.to_serializable()).unwrap();
+            let json_result = serde_json::to_string_pretty(&meta.to_serializable()).unwrap();
             println!("{}", json_result);
         }
         None => {

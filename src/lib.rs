@@ -8,7 +8,7 @@ static ALWAYS_INCLUDED_BOXES: &[&str] = &["@mod", "@swr", "@day", "@xyz", "@mak"
 pub fn parse<P: AsRef<Path>>(
     filename: &P,
     target_boxes: Option<&[String]>,
-) -> Option<(mp4::Mp4Reader<BufReader<File>>, ThetaMeta)> {
+) -> Option<(mp4::Mp4Reader<BufReader<File>>, Option<ThetaMeta>)> {
     let f = File::open(filename).ok()?;
     let size = f.metadata().ok()?.len();
     let reader = BufReader::new(f);
@@ -50,7 +50,11 @@ pub fn parse<P: AsRef<Path>>(
         }
     }
 
-    Some((mp4, theta_meta))
+    if theta_meta.modl.contains("RICOH THETA") {
+        Some((mp4, Some(theta_meta)))
+    } else {
+        Some((mp4, None))
+    }
 }
 
 fn match_box(name: &String, data: &Vec<u8>, theta_meta: &mut ThetaMeta) {
