@@ -8,12 +8,16 @@ pub struct RdtgBox {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-struct DataEntry {
-    timestamp: u64,
+pub struct DataEntry {
+    pub timestamp: u64,
 }
 
 impl RdtgBox {
-    pub fn read(data: &[u8]) -> RdtgBox {
+    pub fn get_entry(&self) -> Vec<DataEntry> {
+        self.data_table.clone()
+    }
+
+    pub(crate) fn read(data: &[u8]) -> RdtgBox {
         let base = RdtBox::read(data);
         let number_of_entries = base.number_of_entries;
         let offset = base._size;

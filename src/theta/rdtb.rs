@@ -8,16 +8,20 @@ pub struct RdtbBox {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-struct DataEntry {
-    x: f32,
-    y: f32,
-    z: f32,
-    reserve: f32,
-    timestamp: u64,
+pub struct DataEntry {
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
+    pub reserve: f32,
+    pub timestamp: u64,
 }
 
 impl RdtbBox {
-    pub fn read(data: &[u8]) -> RdtbBox {
+    pub fn get_entry(&self) -> Vec<DataEntry> {
+        self.data_table.clone()
+    }
+
+    pub(crate) fn read(data: &[u8]) -> RdtbBox {
         let base = RdtBox::read(data);
         let number_of_entries = base.number_of_entries;
         let offset = base._size;

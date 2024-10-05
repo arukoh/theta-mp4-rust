@@ -8,22 +8,26 @@ pub struct Rdl2Box {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-struct DataEntry {
-    timestamp: f64,
-    gps_fix_type: i16,
-    latitude: f64,
-    longitude: f64,
-    altitude: f32,
-    horizontal_accuracy: f32,
-    vertical_accuracy: f32,
-    velocity_east: f32,
-    velocity_north: f32,
-    velocity_up: f32,
-    speed_accuracy: f32,
+pub struct DataEntry {
+    pub timestamp: f64,
+    pub gps_fix_type: i16,
+    pub latitude: f64,
+    pub longitude: f64,
+    pub altitude: f32,
+    pub horizontal_accuracy: f32,
+    pub vertical_accuracy: f32,
+    pub velocity_east: f32,
+    pub velocity_north: f32,
+    pub velocity_up: f32,
+    pub speed_accuracy: f32,
 }
 
 impl Rdl2Box {
-    pub fn read(data: &[u8]) -> Rdl2Box {
+    pub fn get_entry(&self) -> Vec<DataEntry> {
+        self.data_table.clone()
+    }
+
+    pub(crate) fn read(data: &[u8]) -> Rdl2Box {
         let base = RdtBox::read(data);
         let number_of_entries = base.number_of_entries;
         let offset = base._size;

@@ -8,15 +8,19 @@ pub struct RdtlBox {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-struct DataEntry {
-    timestamp: f64,
-    latitude: f64,
-    longitude: f64,
-    altitude: f64,
+pub struct DataEntry {
+    pub timestamp: f64,
+    pub latitude: f64,
+    pub longitude: f64,
+    pub altitude: f64,
 }
 
 impl RdtlBox {
-    pub fn read(data: &[u8]) -> RdtlBox {
+    pub fn get_entry(&self) -> Vec<DataEntry> {
+        self.data_table.clone()
+    }
+
+    pub(crate) fn read(data: &[u8]) -> RdtlBox {
         let base = RdtBox::read_be(data);
         let number_of_entries = base.number_of_entries;
         let offset = base._size;
