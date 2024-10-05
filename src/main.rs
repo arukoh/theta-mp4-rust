@@ -27,7 +27,7 @@ fn main() {
     });
 
     match parse(&cli.filename, target_boxes.as_deref()) {
-        Some(theta_meta) => {
+        Some((_mp4, theta_meta)) => {
             if let Some(rthu_box) = &theta_meta.rthu {
                 let _ = rthu_box.write_to_file(&cli.filename);
                 if let Err(e) = rthu_box.write_to_file(&cli.filename) {

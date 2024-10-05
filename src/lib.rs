@@ -5,7 +5,7 @@ use theta::{rdl2, rdta, rdtb, rdtc, rdtg, rdtl, rthu, RawBox, ThetaMeta};
 
 static ALWAYS_INCLUDED_BOXES: &[&str] = &["@mod", "@swr", "@day", "@xyz", "@mak", "manu", "modl"];
 
-pub fn parse<P: AsRef<Path>>(filename: &P, target_boxes: Option<&[String]>) -> Option<ThetaMeta> {
+pub fn parse<P: AsRef<Path>>(filename: &P, target_boxes: Option<&[String]>) -> Option<(mp4::Mp4Reader<BufReader<File>>, ThetaMeta)> {
     let f = File::open(filename).ok()?;
     let size = f.metadata().ok()?.len();
     let reader = BufReader::new(f);
@@ -47,7 +47,7 @@ pub fn parse<P: AsRef<Path>>(filename: &P, target_boxes: Option<&[String]>) -> O
         }
     }
 
-    Some(theta_meta)
+    Some((mp4, theta_meta))
 }
 
 
