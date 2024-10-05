@@ -1,5 +1,8 @@
-use std::{env, io::{self, Write}};
 use clap::Parser;
+use std::{
+    env,
+    io::{self, Write},
+};
 
 use theta_mp4::parse;
 
@@ -20,11 +23,9 @@ struct Cli {
 
 fn main() {
     let cli = Cli::parse();
-    let target_boxes: Option<Vec<String>> = cli.target.map(|t| {
-        t.split(',')
-         .map(|s| s.trim().to_string())
-         .collect()
-    });
+    let target_boxes: Option<Vec<String>> = cli
+        .target
+        .map(|t| t.split(',').map(|s| s.trim().to_string()).collect());
 
     match parse(&cli.filename, target_boxes.as_deref()) {
         Some((_mp4, theta_meta)) => {

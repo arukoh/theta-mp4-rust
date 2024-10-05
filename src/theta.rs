@@ -1,11 +1,11 @@
+pub mod rdl2;
 mod rdt;
-pub mod rthu;
 pub mod rdta;
 pub mod rdtb;
 pub mod rdtc;
 pub mod rdtg;
 pub mod rdtl;
-pub mod rdl2;
+pub mod rthu;
 
 use serde::Serialize;
 

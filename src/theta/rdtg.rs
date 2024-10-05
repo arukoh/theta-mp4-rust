@@ -21,8 +21,16 @@ impl RdtgBox {
         for i in 0..number_of_entries as usize {
             let entry_offset = offset + i * 8;
             let timestamp = match base.endian {
-                0x0123 => u64::from_le_bytes(data[entry_offset as usize..(entry_offset + 8) as usize].try_into().unwrap()),
-                0x3210 => u64::from_be_bytes(data[entry_offset as usize..(entry_offset + 8) as usize].try_into().unwrap()),
+                0x0123 => u64::from_le_bytes(
+                    data[entry_offset as usize..(entry_offset + 8) as usize]
+                        .try_into()
+                        .unwrap(),
+                ),
+                0x3210 => u64::from_be_bytes(
+                    data[entry_offset as usize..(entry_offset + 8) as usize]
+                        .try_into()
+                        .unwrap(),
+                ),
                 _ => panic!("Unknown endian type"),
             };
             data_table.push(DataEntry { timestamp });
@@ -36,7 +44,11 @@ impl Serialize for RdtgBox {
     where
         S: Serializer,
     {
-        let timestamps: Vec<u64> = self.data_table.iter().map(|entry| entry.timestamp).collect();
+        let timestamps: Vec<u64> = self
+            .data_table
+            .iter()
+            .map(|entry| entry.timestamp)
+            .collect();
         serializer.serialize_some(&timestamps)
     }
 }
@@ -53,7 +65,6 @@ mod tests {
             0x02, 0x00, // sample_size
             0x23, 0x01, // endian (LE: 0x0123)
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // reserve (6 bytes)
-            
             // Data Table
             0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // timestamp (1)
             0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // timestamp (4)
