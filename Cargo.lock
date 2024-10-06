@@ -267,7 +267,7 @@ dependencies = [
 
 [[package]]
 name = "theta-mp4"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "clap",
  "mp4",

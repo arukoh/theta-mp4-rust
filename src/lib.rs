@@ -1,6 +1,6 @@
 use std::{fs::File, io::BufReader, path::Path};
 
-mod theta;
+pub mod theta;
 use theta::{rdl2, rdta, rdtb, rdtc, rdtg, rdtl, rthu, RawBox, ThetaMeta};
 
 static ALWAYS_INCLUDED_BOXES: &[&str] = &["@mod", "@swr", "@day", "@xyz", "@mak", "manu", "modl"];
