@@ -1,10 +1,10 @@
 [package]
 name = "theta-mp4"
-version = "0.4.1"
+version = "0.4.2"
 edition = "2021"
 
 [dependencies]
-clap = { version = "4.5.19", features = ["derive"] }
+clap = { version = "4.5.20", features = ["derive"] }
 mp4 = { git = "https://github.com/arukoh/mp4-rust.git", branch = "master", version = "0.14.0" }
 serde = "1.0.210"
 serde_json = "1.0.128"
