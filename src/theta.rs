@@ -1,5 +1,5 @@
 pub mod rdl2;
-mod rdt;
+pub mod rdt;
 pub mod rdta;
 pub mod rdtb;
 pub mod rdtc;
